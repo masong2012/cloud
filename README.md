@@ -1,5 +1,5 @@
 # cloud
-SpringBoot 多模块启动项目，集成SSM
+SpringBoot 多模块启动项目，集成SSM, 支持i18n，自动分页
 
 ## 模块
 ```
