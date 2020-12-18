@@ -15,28 +15,39 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/hr")
+@RequestMapping("/hr")
 public class HrController {
 
     @Autowired
     private HrService hrService;
 
-    @GetMapping("/hello")
+    @GetMapping("/list_hr")
     public List<Hr> hello(){
         return hrService.getAll();
     }
 
-    @GetMapping("/test")
+    @GetMapping("/string")
     public String test(){
-        System.out.println("-----");
         return "hello test";
     }
 
-    @GetMapping("/get")
+    @GetMapping("/res_fail")
+    public APIResult<Hr> res_fail(HttpServletResponse response){
+        return APIResult.fail();
+    }
+
+    @GetMapping("/res_success")
+    public APIResult<Hr> res_success(HttpServletResponse response){
+        return APIResult.success();
+    }
+
+    @GetMapping("/res_list")
     public APIResult<Hr> res(HttpServletResponse response){
-//        return APIResultExt.successWithList(()-> hrService.getAll());
-//        return APIResult.success();
-//        return APIResult.fail("hello");
+        return APIResultExt.successWithList(()-> hrService.getAll());
+    }
+
+    @GetMapping("/res_item")
+    public APIResult<Hr> res_hr(HttpServletResponse response) {
         return APIResult.successWithResult(hrService.getById(3));
     }
 }
