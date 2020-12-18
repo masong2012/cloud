@@ -18,4 +18,9 @@ public class HrServiceImpl implements HrService {
     public List<Hr> getAll() {
         return hrMapper.getAll();
     }
+
+    @Override
+    public Hr getById(int id) {
+        return hrMapper.getById(id);
+    }
 }

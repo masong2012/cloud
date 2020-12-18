@@ -1,25 +1,23 @@
 package org.example.cloud.api_response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class APIResult<T> {
+public class APIResult<T> implements Serializable {
     private int code;
-    private T data;
     private String message;
-
-    public APIResult(int code, String message, T data){
-        this.code = code;
-        this.message = message;
-        this.data = data;
-    }
+    private T data;
 
     public static int getCode(String key){
         int code = Integer.parseInt(MessagesUtil.get("api_response." + key + ".code"));
