@@ -4,12 +4,9 @@ import org.example.cloud.api_response.APIResult;
 import org.example.cloud.pojo.Hr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
@@ -19,6 +16,13 @@ public class HrController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @GetMapping("/direct")
+    public String direct(){
+        String url = "http://localhost:8001/hr/" + "direct";
+        return restTemplate.getForObject(url, String.class);
+    }
+
 
     @GetMapping("/string")
     public String string(){

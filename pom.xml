@@ -12,11 +12,12 @@
         <module>cloud-pojo</module>
         <module>cloud-dao</module>
         <module>cloud-service</module>
-        <module>server-hr</module>
         <module>cloud-api-response</module>
         <module>cloud-mvc</module>
+
         <module>server-hr-consumer</module>
-        <module>euraka-server</module>
+        <module>server-eureka</module>
+        <module>server-hr</module>
     </modules>
     <packaging>pom</packaging>
 

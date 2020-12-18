@@ -21,6 +21,11 @@ public class HrController {
     @Autowired
     private HrService hrService;
 
+    @GetMapping("/direct")
+    public String direct(){
+        return "This is direct Call";
+    }
+
     @GetMapping("/list_hr")
     public List<Hr> hello(){
         return hrService.getAll();
