@@ -17,3 +17,6 @@ spring:
 #ribbon:
 #  ReadTimeout: 5000
 #  ConnectTimeout: 5000
+logging:
+  level:
+    org.example.cloud.api: debug
