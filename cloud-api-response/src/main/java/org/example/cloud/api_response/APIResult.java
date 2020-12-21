@@ -13,11 +13,17 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class APIResult<T> implements Serializable {
-    private int code;
+@NoArgsConstructor
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+public class APIResult<T> {
+    private Integer code;
     private String message;
     private T data;
+
+    public APIResult(Integer code, String message) {
+        this(code, message, null);
+    }
+
 
     public static int getCode(String key){
         int code = Integer.parseInt(MessagesUtil.get("api_response." + key + ".code"));

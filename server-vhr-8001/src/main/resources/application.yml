@@ -1,0 +1,21 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: vhr-server
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vhr?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password:
+eureka:
+  instance:
+    hostname: vhr-srever8001.com
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka9000.com:9000/eureka/, http://eureka9001.com:9001/eureka/

@@ -20,6 +20,12 @@ cloud-mvc  API扩展模块
 ## 业务模块
 ```
 
-server-hr Hr业务模块
+server-vhr VHr生产者模块
+server-vhr-consumer VHr 消费者模块
 
 ```
+
+spring-boot-starter-parent继承spring-boot-dependencies,spring-boot-dependencies 里有常见依赖的默认值
+
+
+
