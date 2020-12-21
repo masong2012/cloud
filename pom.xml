@@ -19,6 +19,7 @@
         <module>eureka-server-9001</module>
         <module>server-vhr-8002</module>
         <module>server-vhr-8001</module>
+        <module>server-vhr-consumer-hystrix</module>
 
     </modules>
 

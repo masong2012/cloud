@@ -27,5 +27,11 @@ server-vhr-consumer VHr 消费者模块
 
 spring-boot-starter-parent继承spring-boot-dependencies,spring-boot-dependencies 里有常见依赖的默认值
 
+Hystrix
+
+降级 fallback--》 兜底方案-》if else default -》稍后再试试，可能会成功
+熔断 break -》达到最大访问后，拒绝访问量或者降级
+限流 flowlimit -》排队
+
 
 
