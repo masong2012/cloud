@@ -55,5 +55,6 @@
     <orderEntry type="module" module-name="cloud-pojo" />
     <orderEntry type="module" module-name="cloud-base" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.16.18" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:2.3.7.RELEASE" level="project" />
   </component>
 </module>

@@ -20,12 +20,20 @@ public class VHrConsumerController {
     private HrHystrixService hrFeign;
 
     @GetMapping("/consumer/feign/hello")
-//    @HystrixCommand
     public APIResult consumer_feign_hello(){
         log.info("******** -------> consumer feign Hello <--------- ********");
         return hrFeign.hello();
     }
 
+
+    @HystrixCommand
+    @GetMapping("/consumer/feign/error")
+    public APIResult error_method(){
+        int i = 1/0;
+        return hrFeign.hello();
+    }
+
+//    统一fallback容错降级处理
     public APIResult hr_global_fallbackMethod(){
         return APIResult.successWithResult("Fallback .!!! hr_global_fallbackMethod");
     }

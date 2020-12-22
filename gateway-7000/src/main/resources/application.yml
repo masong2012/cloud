@@ -1,0 +1,83 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: gateway-7000
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000        #最大并发数
+    max-connections: 20000   #接受和处理的最大连接数
+    min-SpareThreads: 20     #初始化时创建的线程数
+    acceptCount: 700         #可以放到处理队列中的请求数
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true #通过小写的服务名称进行访问
+      routes:
+        - id: gateway_route
+          #uri 以lb：//开头（lb 代表从注册中心获取服务），
+          #后面接的就是你需要转发到的服务名称，这个服务名称必须跟 Eureka 中的对应，否则会找不到服务
+          uri: lb://vhr-server
+          predicates:
+            - Path=/gateway/hr/get/**
+          filters:
+            - StripPrefix=1 # /gateway/hr/get/** -> /hr/get/**
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+
+#！！！！这是一个路由
+        - id: gateway_route2
+          uri: lb://vhr-server
+          predicates:
+            - Path=/lb/**
+          filters:
+            - PrefixPath=/hr #lib/** -> hr/lib/**
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@userKeyResolver}"
+                redis-rate-limiter.replenishRate: 1 #1秒限制请求 平均数
+                redis-rate-limiter.burstCapacity: 3 #1秒限制请求 最大叔
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+
+#            - RemoteAddr=192.168.1.1,172.19.2.181,168.10.11.3 #白名单
+  redis:
+    host: localhost
+    port: 6379
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka9000.com:9000/eureka/, http://eureka9001.com:9001/eureka/
+
+# hystrix 信号量隔离，3秒后自动超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 3000
+  shareSecurityContext: true
+
+
+# 3秒触发熔断机制
+# https://cloud.spring.io/spring-cloud-gateway/multi/multi_gateway-route-filters.html
+#    当下游接口负载很大，或者接口不通等其他原因导致超时，如果接口不熔断的话将会影响到下游接口得不到喘息，
+#  网关也会因为超时连接一直挂起，很可能因为一个子系统的问题导致整个系统的雪崩。所以我们的网关需要设计熔断，
+#  当因为熔断器打开时，网关将返回一个降级的应答。
+#  192.168.0.1/16 (where 192.168.0.1 is an IP address and 16 is a subnet mask)
